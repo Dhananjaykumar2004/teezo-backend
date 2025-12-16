@@ -16,12 +16,13 @@ connectCloudinary()
 
 const corsOptions = {
   origin: [
-    "http://localhost:5173",
+    "http://localhost:5173",   // main frontend
+    "http://localhost:5174",   // admin panel (THIS WAS MISSING)
     "https://teezostore.com",
     "https://www.teezostore.com",
     "https://teezostore-ra2j.vercel.app"
   ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 };
