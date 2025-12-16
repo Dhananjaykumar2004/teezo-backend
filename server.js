@@ -8,37 +8,37 @@ import productRouter from './routes/productRoute.js'
 import cartRouter from './routes/cartRoute.js'
 import orderRouter from './routes/orderRoute.js'
 
-// App Config
 const app = express()
 const port = process.env.PORT || 4000
+
 connectDB()
 connectCloudinary()
 
-// middlewares
-app.use(express.json())
-app.use(cors({
+const corsOptions = {
   origin: [
     "http://localhost:5173",
-    "https://teezostore.vercel.app",
-    "https://teezostore.com"
+    "https://teezostore.com",
+    "https://www.teezostore.com",
+    "https://teezostore-ra2j.vercel.app"
   ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
-}))
+};
 
-// IMPORTANT: handle preflight
-app.options("*", cors())
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 
-// api endpoints
-app.use('/api/user',userRouter)
-app.use('/api/product',productRouter)
-app.use('/api/cart',cartRouter)
-app.use('/api/order',orderRouter)
+app.use(express.json())
+// routes
+app.use('/api/user', userRouter)
+app.use('/api/product', productRouter)
+app.use('/api/cart', cartRouter)
+app.use('/api/order', orderRouter)
 
-app.get('/',(req,res)=>{
-    res.send("API Working")
+app.get('/', (req, res) => {
+  res.send("API Working")
 })
 
-app.listen(port, ()=> console.log('Server started on PORT : '+ port))
+app.listen(port, () => console.log('Server started on PORT : ' + port))
