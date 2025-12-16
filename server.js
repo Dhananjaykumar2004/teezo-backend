@@ -20,7 +20,7 @@ app.use(cors({
   origin: [
     "http://localhost:5173",
     "https://teezostore.vercel.app/",
-    "https://teezostore.com/"
+    "https://teezostore.com",
   ],
   credentials: true
 }))
