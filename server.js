@@ -19,11 +19,16 @@ app.use(express.json())
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://teezostore.vercel.app/",
+    "https://teezostore.vercel.app",
     "https://teezostore.com"
   ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }))
+
+// IMPORTANT: handle preflight
+app.options("*", cors())
 
 
 // api endpoints
