@@ -17,24 +17,19 @@ const port = process.env.PORT || 4000;
 connectDB();
 connectCloudinary();
 
-// ✅ ALLOWED ORIGINS (ALL YOUR FRONTENDS)
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-
-  "https://teezostore.com",
-  "https://www.teezostore.com",
-
-  "https://teezostore.vercel.app",
-  "https://teezo-admin1.vercel.app"
-];
-
-// ✅ CORRECT CORS SETUP
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow Postman / server-to-server
       if (!origin) return callback(null, true);
+
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "https://teezostore.com",
+        "https://www.teezostore.com",
+        "https://teezostore.vercel.app",
+        "https://teezo-admin1.vercel.app"
+      ];
 
       if (allowedOrigins.includes(origin)) {
         callback(null, true);
@@ -44,12 +39,12 @@ app.use(
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    allowedHeaders: ["Content-Type", "Authorization", "token"] // ✅ FIX
   })
 );
 
-// ✅ MUST handle preflight
 app.options("*", cors());
+
 
 // middlewares
 app.use(express.json());
