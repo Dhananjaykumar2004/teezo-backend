@@ -14,13 +14,16 @@ const port = process.env.PORT || 4000
 connectDB()
 connectCloudinary()
 
+import cors from "cors";
+
 const corsOptions = {
   origin: [
-    "http://localhost:5173",   // main frontend
-    "http://localhost:5174",   // admin panel (THIS WAS MISSING)
+    "http://localhost:5173",          // main frontend local
+    "http://localhost:5174",          // admin local
     "https://teezostore.com",
     "https://www.teezostore.com",
-    "https://teezostore-ra2j.vercel.app"
+    "https://teezostore.vercel.app",
+    "https://teezo-admin1.vercel.app" // ✅ ADMIN PANEL (IMPORTANT)
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -29,6 +32,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
+
 
 
 app.use(express.json())
