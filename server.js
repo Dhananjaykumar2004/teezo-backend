@@ -17,33 +17,26 @@ const port = process.env.PORT || 4000;
 connectDB();
 connectCloudinary();
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
+const corsOptions = {
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://teezostore.com",
+    "https://www.teezostore.com",
+    "https://teezostore.vercel.app",
+    "https://teezo-admin1.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "token"
+  ],
+  credentials: true
+};
 
-      const allowedOrigins = [
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "https://teezostore.com",
-        "https://www.teezostore.com",
-        "https://teezostore.vercel.app",
-        "https://teezo-admin1.vercel.app"
-      ];
-
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS blocked: " + origin));
-      }
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "token"] // ✅ FIX
-  })
-);
-
-app.options("*", cors());
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 
 // middlewares
